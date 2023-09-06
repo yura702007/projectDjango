@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
 from django.shortcuts import render
 
 
@@ -18,3 +18,7 @@ def categories_by_slug(request: HttpRequest, cat_slug: str) -> HttpResponse:
 
 def archive(request: HttpRequest, year: int) -> HttpResponse:
     return HttpResponse(f'<h1>Архив по годам</h1><p>year: {year}</p>')
+
+
+def page_not_found(request: HttpRequest, exception: Exception) -> HttpResponseNotFound:
+    return HttpResponseNotFound(f'<h1>Страница не найдена</h1>')
