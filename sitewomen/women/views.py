@@ -1,5 +1,5 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -18,7 +18,7 @@ def categories_by_slug(request: HttpRequest, cat_slug: str) -> HttpResponse:
 
 def archive(request: HttpRequest, year: int) -> HttpResponse:
     if year > 2023:
-        raise Http404()
+        return redirect('/')
     return HttpResponse(f'<h1>Архив по годам</h1><p>year: {year}</p>')
 
 
