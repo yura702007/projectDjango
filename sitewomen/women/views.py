@@ -1,12 +1,10 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.template.loader import render_to_string
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    t = render_to_string('women/index.html')
-    return HttpResponse(t)
+    return render(request, 'women/index.html')
 
 
 def categories(request: HttpRequest, cat_id: int) -> HttpResponse:
