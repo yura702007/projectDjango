@@ -18,7 +18,7 @@ def categories_by_slug(request: HttpRequest, cat_slug: str) -> HttpResponse:
 
 def archive(request: HttpRequest, year: int) -> HttpResponse:
     if year > 2023:
-        return redirect(index)
+        return redirect('home')
     return HttpResponse(f'<h1>Архив по годам</h1><p>year: {year}</p>')
 
 
