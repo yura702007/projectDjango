@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    t = render_to_string('path_to_template')
+    t = render_to_string('women/index.html')
     return HttpResponse(t)
 
 
