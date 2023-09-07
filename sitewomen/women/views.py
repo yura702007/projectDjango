@@ -5,7 +5,8 @@ from django.template.loader import render_to_string
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('<p>Это главная страница сайта</p>')
+    t = render_to_string('path_to_template')
+    return HttpResponse(t)
 
 
 def categories(request: HttpRequest, cat_id: int) -> HttpResponse:
