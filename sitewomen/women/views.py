@@ -3,9 +3,15 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 
+menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
+
+
 def index(request: HttpRequest) -> HttpResponse:
-    data = {'tittle': 'Главная страница'}
-    return render(request, 'women/index.html', data)
+    data = {
+        'tittle': 'Главная страница',
+        'menu': menu
+    }
+    return render(request, 'women/index.html', context=data)
 
 
 def about(request: HttpRequest) -> HttpResponse:
