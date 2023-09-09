@@ -6,11 +6,12 @@
 </head>
 <body>
     <p>{{ menu }}</p>
-    <p>{{ float }}</p>
+    <p>{{ float|add:"20" }}</p>
     <p>{{ lst.3 }}</p>
     <p>{{ set }}</p>
     <p>{{ dict.key_1 }}</p>
     <p>{{ obj.a }}</p>
-    <h1>{{ tittle }}</h1>
+    <p>{{ url }}</p>
+    <h1>{{ tittle|capfirst|cut:" "|cut:"?" }}</h1>
 </body>
 </html>
