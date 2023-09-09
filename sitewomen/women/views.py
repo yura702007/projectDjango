@@ -4,11 +4,12 @@ from django.urls import reverse
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    return render(request, 'women/index.html')
+    data = {'tittle': 'Главная страница'}
+    return render(request, 'women/index.html', data)
 
 
 def about(request: HttpRequest) -> HttpResponse:
-    return render(request, 'women/about.html')
+    return render(request, 'women/about.html', {'tittle': 'О сайте'})
 
 
 def categories(request: HttpRequest, cat_id: int) -> HttpResponse:
