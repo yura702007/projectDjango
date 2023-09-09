@@ -11,6 +11,9 @@ class MyClass:
         self.a = a
         self.b = b
 
+    def __repr__(self):
+        return self.a
+
 
 def index(request: HttpRequest) -> HttpResponse:
     data = {
