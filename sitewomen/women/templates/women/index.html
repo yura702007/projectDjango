@@ -9,6 +9,7 @@
     <h1>{{ title }}</h1>
     <ul>
         {%for p in posts%}
+        {%if p.is_publisher%}
             <li>
                 <h2>{{ p.title }}</h2>
                 <p>{{ p.content }}</p>
@@ -16,6 +17,7 @@
                     <hr>
                 {%endif%}
             </li>
+        {%endif%}
         {%endfor%}
     </ul>
 </body>
