@@ -1,37 +1,30 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.template.defaultfilters import slugify
+from django.template.defaultfilters import join
 
 
 menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
 
 
-class MyClass:
-    def __init__(self, a, b):
-        self.a = a
-        self.b = b
-
-    def __repr__(self):
-        return self.a
+data_db = [
+    {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_publisher': True},
+    {'id': 2, 'title': 'Марго Робби', 'content': 'Биография Марго Робби', 'is_publisher': False},
+    {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулии Робертс', 'is_publisher': True},
+]
 
 
 def index(request: HttpRequest) -> HttpResponse:
     data = {
-        'tittle': 'главная страница?',
+        'title': 'Главная страница',
         'menu': menu,
-        'float': 28.56,
-        'lst': [1, 2, 'asd', True],
-        'set': {1, 2, 3, 4, 5},
-        'dict': {'key_1': 'value_1', 'key_2': 'value_2'},
-        'obj': MyClass(10, 20),
-        'url': slugify('The Main Page')
+        'posts': data_db
     }
     return render(request, 'women/index.html', context=data)
 
 
 def about(request: HttpRequest) -> HttpResponse:
-    return render(request, 'women/about.html', {'tittle': 'О сайте'})
+    return render(request, 'women/about.html', {'title': 'О сайте'})
 
 
 def categories(request: HttpRequest, cat_id: int) -> HttpResponse:

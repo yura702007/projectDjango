@@ -2,16 +2,19 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>{{ tittle }}</title>
+    <title>{{ title }}</title>
 </head>
 <body>
-    <p>{{ menu }}</p>
-    <p>{{ float|add:"20" }}</p>
-    <p>{{ lst.3 }}</p>
-    <p>{{ set }}</p>
-    <p>{{ dict.key_1 }}</p>
-    <p>{{ obj.a }}</p>
-    <p>{{ url }}</p>
-    <h1>{{ tittle|capfirst|cut:" "|cut:"?" }}</h1>
+    <p>{{ menu|join:" | " }}</p>
+    <h1>{{ title }}</h1>
+    <ul>
+        {%for p in posts%}
+            <li>
+                <h2>{{ p.title }}</h2>
+                <p>{{ p.content }}</p>
+                <hr>
+            </li>
+        {%endfor%}
+    </ul>
 </body>
 </html>
