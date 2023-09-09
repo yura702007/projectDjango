@@ -6,10 +6,21 @@ from django.urls import reverse
 menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
 
 
+class MyClass:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+
 def index(request: HttpRequest) -> HttpResponse:
     data = {
         'tittle': 'Главная страница',
-        'menu': menu
+        'menu': menu,
+        'float': 28.56,
+        'lst': [1, 2, 'asd', True],
+        'set': {1, 2, 3, 4, 5},
+        'dict': {'key_1': 'value_1', 'key_2': 'value_2'},
+        'obj': MyClass(10, 20)
     }
     return render(request, 'women/index.html', context=data)
 
