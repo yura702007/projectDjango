@@ -27,21 +27,8 @@ def about(request: HttpRequest) -> HttpResponse:
     return render(request, 'women/about.html', {'title': 'О сайте'})
 
 
-def categories(request: HttpRequest, cat_id: int) -> HttpResponse:
-    return HttpResponse(f'<h1>Статьи по категориям</h1><p>id: {cat_id}</p>')
-
-
-def categories_by_slug(request: HttpRequest, cat_slug: str) -> HttpResponse:
-    if request.GET:
-        print(request.GET)
-    return HttpResponse(f'<h1>Статьи по категориям</h1><p>slug: {cat_slug}</p>')
-
-
-def archive(request: HttpRequest, year: int) -> HttpResponse:
-    if year > 2023:
-        uri = reverse('cats', args=('music',))
-        return redirect(uri)
-    return HttpResponse(f'<h1>Архив по годам</h1><p>year: {year}</p>')
+def show_post(request: HttpRequest, post_id: int) -> HttpResponse:
+    return HttpResponse(f'Отображение статьи с id = {post_id}')
 
 
 def page_not_found(request: HttpRequest, exception: Exception) -> HttpResponseNotFound:
