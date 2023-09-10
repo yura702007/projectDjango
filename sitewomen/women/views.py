@@ -4,7 +4,12 @@ from django.urls import reverse
 from django.template.defaultfilters import join
 
 
-menu = ['О сайте', 'Добавить статью', 'Обратная связь', 'Войти']
+menu = [
+    {'title': 'О сайте', 'url_name': 'about'},
+    {'title': 'Добавить статью', 'url_name': 'add_page'},
+    {'title': 'Обратная связь', 'url_name': 'contacts'},
+    {'title': 'Авторизация', 'url_name': 'login'},
+]
 
 
 data_db = [
@@ -29,6 +34,18 @@ def about(request: HttpRequest) -> HttpResponse:
 
 def show_post(request: HttpRequest, post_id: int) -> HttpResponse:
     return HttpResponse(f'Отображение статьи с id = {post_id}')
+
+
+def add_page(request: HttpRequest) -> HttpResponse:
+    return HttpResponse('<h1>Добавление статьи</h1')
+
+
+def contacts(request: HttpRequest) -> HttpResponse:
+    return HttpResponse('<h1>Обратная связь</h1')
+
+
+def login(request: HttpRequest) -> HttpResponse:
+    return HttpResponse('<h1>Авторизация</h1')
 
 
 def page_not_found(request: HttpRequest, exception: Exception) -> HttpResponseNotFound:
