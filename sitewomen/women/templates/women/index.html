@@ -1,5 +1,6 @@
-{% extended 'base.html' %}
+{% extends 'base.html' %}
 {% block content %}
+{% include 'women/includes/nav.html' %}
 <ul>
     {%for p in posts%}
     {%if p.is_publisher%}
@@ -14,4 +15,5 @@
     {%endif%}
     {%endfor%}
 </ul>
+{% include 'women/includes/nav.html' %}
 {% endblock %}
