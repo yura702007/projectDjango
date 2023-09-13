@@ -5,6 +5,7 @@ from django.template.defaultfilters import join
 
 
 menu = [
+    {'title': 'Главная страница', 'url_name': 'about'},
     {'title': 'О сайте', 'url_name': 'about'},
     {'title': 'Добавить статью', 'url_name': 'add_page'},
     {'title': 'Обратная связь', 'url_name': 'contacts'},
@@ -29,7 +30,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 def about(request: HttpRequest) -> HttpResponse:
-    return render(request, 'women/about.html', {'title': 'О сайте'})
+    return render(request, 'women/about.html', {'title': 'О сайте', 'menu': menu})
 
 
 def show_post(request: HttpRequest, post_id: int) -> HttpResponse:
