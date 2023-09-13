@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-{% include 'women/includes/nav.html' only %}
+{% include 'women/includes/nav.html' only with title2='asdf' %}
 <ul>
     {%for p in posts%}
     {%if p.is_publisher%}
