@@ -31,7 +31,8 @@ def index(request: HttpRequest) -> HttpResponse:
     data = {
         'title': 'Главная страница',
         'menu': menu,
-        'posts': data_db
+        'posts': data_db,
+        'cat_selected': 0,
     }
     return render(request, 'women/index.html', context=data)
 
@@ -45,7 +46,13 @@ def show_post(request: HttpRequest, post_id: int) -> HttpResponse:
 
 
 def show_category(request: HttpRequest, cat_id: int) -> HttpResponse:
-    return index(request)
+    data = {
+        'title': 'Отображение по рубрикам',
+        'menu': menu,
+        'posts': data_db,
+        'cat_selected': cat_id,
+    }
+    return render(request, 'women/index.html', context=data)
 
 
 def add_page(request: HttpRequest) -> HttpResponse:
