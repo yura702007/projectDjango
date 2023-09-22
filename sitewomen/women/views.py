@@ -14,13 +14,6 @@ menu = [
 ]
 
 
-data_db = [
-    {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_publisher': True},
-    {'id': 2, 'title': 'Марго Робби', 'content': 'Биография Марго Робби', 'is_publisher': False},
-    {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулии Робертс', 'is_publisher': True},
-]
-
-
 cats_db = [
     {'id': 1, 'name': 'Актрисы'},
     {'id': 2, 'name': 'Певицы'},
@@ -29,10 +22,11 @@ cats_db = [
 
 
 def index(request: HttpRequest) -> HttpResponse:
+    posts = Women.objects.filter(is_published=1)
     data = {
         'title': 'Главная страница',
         'menu': menu,
-        'posts': data_db,
+        'posts': posts,
         'cat_selected': 0,
     }
     return render(request, 'women/index.html', context=data)
