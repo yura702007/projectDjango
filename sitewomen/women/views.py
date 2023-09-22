@@ -50,7 +50,7 @@ def show_post(request: HttpRequest, post_id: int) -> HttpResponse:
         'post': post,
         'cat_selected': 1
     }
-    return HttpResponse(f'Отображение статьи с id = {post_id}')
+    return render(request, 'women/post.html', data)
 
 
 def show_category(request: HttpRequest, cat_id: int) -> HttpResponse:
