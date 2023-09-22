@@ -14,6 +14,13 @@ menu = [
 ]
 
 
+data_db = [
+    {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_publisher': True},
+    {'id': 2, 'title': 'Марго Робби', 'content': 'Биография Марго Робби', 'is_publisher': False},
+    {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулии Робертс', 'is_publisher': True},
+]
+
+
 cats_db = [
     {'id': 1, 'name': 'Актрисы'},
     {'id': 2, 'name': 'Певицы'},
