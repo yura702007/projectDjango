@@ -1,8 +1,9 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.defaultfilters import join
 
+from . models import Women
 
 menu = [
     {'title': 'Главная страница', 'url_name': 'home'},
@@ -42,6 +43,13 @@ def about(request: HttpRequest) -> HttpResponse:
 
 
 def show_post(request: HttpRequest, post_id: int) -> HttpResponse:
+    post = get_object_or_404(Women, pk=post_id)
+    data = {
+        'title': post.title,
+        'menu': menu,
+        'post': post,
+        'cat_selected': 1
+    }
     return HttpResponse(f'Отображение статьи с id = {post_id}')
 
 
