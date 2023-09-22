@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Women(models.Model):
@@ -17,3 +18,6 @@ class Women(models.Model):
         indexes = [
             models.Index(fields=['-time_create'])
         ]
+
+    def get_absolute_url(self):
+        return reverse('post', kwargs={'post_slug': self.slug})
