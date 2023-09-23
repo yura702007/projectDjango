@@ -2,6 +2,11 @@ from django.db import models
 from django.urls import reverse
 
 
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_published=1)
+
+
 class Women(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True, db_index=True)
