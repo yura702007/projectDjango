@@ -15,6 +15,8 @@ class Women(models.Model):
     time_update = models.TimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
 
+    published = PublishedManager()
+
     def __str__(self):
         return self.title
 
