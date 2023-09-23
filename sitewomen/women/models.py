@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(is_published=1)
+        return super().get_queryset().filter(is_published=Women.Status.PUBLISHED)
 
 
 class Women(models.Model):
@@ -17,7 +17,7 @@ class Women(models.Model):
     content = models.TextField(blank=True)
     time_create = models.TimeField(auto_now_add=True)
     time_update = models.TimeField(auto_now=True)
-    is_published = models.BooleanField(default=True)
+    is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT)
 
     objects = models.Manager()
     published = PublishedManager()
