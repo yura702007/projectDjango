@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.defaultfilters import join
 
-from . models import Women
+from .models import Women, Category
 
 menu = [
     {'title': 'Главная страница', 'url_name': 'home'},
@@ -18,13 +18,6 @@ data_db = [
     {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_publisher': True},
     {'id': 2, 'title': 'Марго Робби', 'content': 'Биография Марго Робби', 'is_publisher': False},
     {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулии Робертс', 'is_publisher': True},
-]
-
-
-cats_db = [
-    {'id': 1, 'name': 'Актрисы'},
-    {'id': 2, 'name': 'Певицы'},
-    {'id': 3, 'name': 'Спортсменки'},
 ]
 
 
@@ -54,12 +47,14 @@ def show_post(request: HttpRequest, post_slug: str) -> HttpResponse:
     return render(request, 'women/post.html', data)
 
 
-def show_category(request: HttpRequest, cat_id: int) -> HttpResponse:
+def show_category(request: HttpRequest, cat_slug: str) -> HttpResponse:
+    category = get_object_or_404(Category, slug=cat_slug)
+    posts = Women.published.filter(cat_id=category.pk)
     data = {
-        'title': 'Отображение по рубрикам',
+        'title': f'Рубрика: {category.name}',
         'menu': menu,
-        'posts': data_db,
-        'cat_selected': cat_id,
+        'posts': posts,
+        'cat_selected': category.pk,
     }
     return render(request, 'women/index.html', context=data)
 
