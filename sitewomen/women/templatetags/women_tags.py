@@ -14,4 +14,4 @@ def show_categories(cat_selected=0):
 @register.inclusion_tag('women/list_tags.html')
 def show_all_tags():
     tags = TagPost.objects.all()
-    return {'cats': tags}
+    return {'tags': tags}
