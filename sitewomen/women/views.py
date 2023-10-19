@@ -14,15 +14,8 @@ menu = [
 ]
 
 
-data_db = [
-    {'id': 1, 'title': 'Анджелина Джоли', 'content': 'Биография Анджелины Джоли', 'is_publisher': True},
-    {'id': 2, 'title': 'Марго Робби', 'content': 'Биография Марго Робби', 'is_publisher': False},
-    {'id': 3, 'title': 'Джулия Робертс', 'content': 'Биография Джулии Робертс', 'is_publisher': True},
-]
-
-
 def index(request: HttpRequest) -> HttpResponse:
-    posts = Women.published.all()
+    posts = Women.published.all().select_related('cat')
     data = {
         'title': 'Главная страница',
         'menu': menu,
@@ -49,7 +42,7 @@ def show_post(request: HttpRequest, post_slug: str) -> HttpResponse:
 
 def show_category(request: HttpRequest, cat_slug: str) -> HttpResponse:
     category = get_object_or_404(Category, slug=cat_slug)
-    posts = Women.published.filter(cat_id=category.pk)
+    posts = Women.published.filter(cat_id=category.pk).select_related('cat')
     data = {
         'title': f'Рубрика: {category.name}',
         'menu': menu,
