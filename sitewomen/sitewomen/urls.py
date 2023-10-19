@@ -21,6 +21,7 @@ import women.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('women.urls')),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
 
 handler404 = women.views.page_not_found
