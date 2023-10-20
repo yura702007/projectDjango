@@ -12,15 +12,17 @@ class Women(models.Model):
         DRAFT = 0, 'Черновик'
         PUBLISHED = 1, 'Опубликовано'
 
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255, unique=True, db_index=True)
-    content = models.TextField(blank=True)
-    time_create = models.DateTimeField(auto_now_add=True)
-    time_update = models.DateTimeField(auto_now=True)
-    is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT)
-    cat = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='posts')
-    tags = models.ManyToManyField('TagPost', blank=True, related_name='tags')
-    husband = models.OneToOneField('Husband', on_delete=models.SET_NULL, null=True, blank=True, related_name='wife')
+    title = models.CharField(max_length=255, verbose_name='Имя')
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name='Slug')
+    content = models.TextField(blank=True, verbose_name='Статья')
+    time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    time_update = models.DateTimeField(auto_now=True, verbose_name='Время обновления')
+    is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT, verbose_name='Статус')
+    cat = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='posts', verbose_name='Категория')
+    tags = models.ManyToManyField('TagPost', blank=True, related_name='tags', verbose_name='Теги')
+    husband = models.OneToOneField(
+        'Husband', on_delete=models.SET_NULL, null=True, blank=True, related_name='wife', verbose_name='Муж'
+    )
 
     objects = models.Manager()
     published = PublishedManager()
