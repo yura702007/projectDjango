@@ -3,16 +3,16 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 
 
-def translate_to_eng(s: str) -> str:
-    d = {
-        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'ye',
-        'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'yi', 'к': 'k',
-        'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r',
-        'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'tch',
-        'ч': 'ch', 'ш': 'sh', 'щ': 'sth', 'ъ': '', 'ы': 'y', 'ь': '',
-        'э': 'e', 'ю': 'yu', 'я': 'ya', ' ': '-'
-    }
-    return ''.join((d[c] for c in s.lower()))
+# def translate_to_eng(s: str) -> str:
+#     d = {
+#         'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'ye',
+#         'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'yi', 'к': 'k',
+#         'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r',
+#         'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'tch',
+#         'ч': 'ch', 'ш': 'sh', 'щ': 'sth', 'ъ': '', 'ы': 'y', 'ь': '',
+#         'э': 'e', 'ю': 'yu', 'я': 'ya', ' ': '-'
+#     }
+#     return ''.join((d[c] for c in s.lower()))
 
 
 class PublishedManager(models.Manager):
@@ -56,9 +56,9 @@ class Women(models.Model):
     def get_absolute_url(self):
         return reverse('post', kwargs={'post_slug': self.slug})
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(translate_to_eng(self.title))
-        super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(translate_to_eng(self.title))
+    #     super().save(*args, **kwargs)
 
 
 class Husband(models.Model):
