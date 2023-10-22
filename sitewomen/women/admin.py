@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import Women, Category
 
 
-# Register your models here.
 @admin.register(Women)
 class WomenAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'time_create', 'is_published', 'cat')
@@ -11,6 +10,7 @@ class WomenAdmin(admin.ModelAdmin):
     list_per_page = 5
     ordering = ['time_create', 'title']
     search_fields = ['title__startswith', 'cat__name']
+    list_filter = ['cat__name', 'is_published']
 
 
 @admin.register(Category)
