@@ -21,7 +21,7 @@ class MarriedFilter(admin.SimpleListFilter):
 
 @admin.register(Women)
 class WomenAdmin(admin.ModelAdmin):
-    fields = ['title', 'slug', 'cat', 'content']
+    fields = ['title', 'slug', 'cat', 'content', 'husband']
     readonly_fields = ['slug']
     list_display = ('id', 'title', 'time_create', 'is_published', 'cat')
     list_display_links = ('id', 'title')
