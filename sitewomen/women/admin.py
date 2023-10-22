@@ -10,6 +10,7 @@ class WomenAdmin(admin.ModelAdmin):
     list_editable = ('is_published', 'cat')
     list_per_page = 5
     ordering = ['time_create', 'title']
+    search_fields = ['title__startswith', 'cat__name']
 
 
 @admin.register(Category)
