@@ -65,7 +65,7 @@ def show_tag_posts_list(request: HttpRequest, tag_slug: str) -> HttpResponse:
 
 
 def add_page(request: HttpRequest) -> HttpResponse:
-    return HttpResponse('<h1>Добавление статьи</h1')
+    return render(request, 'women/add_page.html', context={'menu': menu, 'title': 'Добавление статьи'})
 
 
 def contacts(request: HttpRequest) -> HttpResponse:
