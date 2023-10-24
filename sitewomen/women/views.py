@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.defaultfilters import join
 
+from .forms import AddPostForm
 from .models import Women, Category, TagPost
 
 menu = [
@@ -65,7 +66,13 @@ def show_tag_posts_list(request: HttpRequest, tag_slug: str) -> HttpResponse:
 
 
 def add_page(request: HttpRequest) -> HttpResponse:
-    return render(request, 'women/add_page.html', context={'menu': menu, 'title': 'Добавление статьи'})
+    form = AddPostForm()
+    data = {
+        'menu': menu,
+        'title': 'Добавление статьи',
+        'form': form
+    }
+    return render(request, 'women/add_page.html', context=data)
 
 
 def contacts(request: HttpRequest) -> HttpResponse:
