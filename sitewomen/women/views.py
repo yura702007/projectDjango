@@ -66,7 +66,12 @@ def show_tag_posts_list(request: HttpRequest, tag_slug: str) -> HttpResponse:
 
 
 def add_page(request: HttpRequest) -> HttpResponse:
-    form = AddPostForm()
+    if request.method == 'POST':
+        form = AddPostForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+    else:
+        form = AddPostForm()
     data = {
         'menu': menu,
         'title': 'Добавление статьи',
