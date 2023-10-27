@@ -1,4 +1,6 @@
 from django import forms
+from django.core.validators import MinLengthValidator, MaxLengthValidator
+
 from .models import Category, Husband
 
 
@@ -14,7 +16,11 @@ class AddPostForm(forms.Form):
             'required': 'Без заголовка никак'
         }
     )
-    slug = forms.SlugField(max_length=255, label='URL')
+    slug = forms.SlugField(
+        max_length=255,
+        label='URL',
+        validators=[MinLengthValidator(5), MaxLengthValidator(100)]
+    )
     content = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 5}), required=False, label='Контент')
     is_published = forms.BooleanField(required=False, label='Статус', initial=True)
     cat = forms.ModelChoiceField(
