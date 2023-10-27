@@ -32,7 +32,7 @@ class AddPostForm(forms.Form):
             'min_length': 'Слишком короткий заголовок',
             'required': 'Без заголовка никак'
         },
-        validators=[RussianValidator()]
+        # validators=[RussianValidator()]
     )
     slug = forms.SlugField(
         max_length=255,
@@ -47,3 +47,12 @@ class AddPostForm(forms.Form):
     husband = forms.ModelChoiceField(
         queryset=Husband.objects.all(), required=False, label='Муж', empty_label='Не замужем'
     )
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        ALLOWED_CHARS = """
+            АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзийклмнопрстуфхцчшщбыъэюя0123456789- 
+            """
+        if not (set(title) <= set(ALLOWED_CHARS)):
+            raise ValidationError("Должны присутствовать только русские символы, дефис и пробел.")
+        return title
