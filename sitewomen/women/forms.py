@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.utils.deconstruct import deconstructible
 
-from .models import Category, Husband
+from .models import Category, Husband, Women
 
 
 @deconstructible
@@ -21,26 +21,26 @@ class RussianValidator:
             raise ValidationError(self.message, code=self.code, params={'value': value})
 
 
-class AddPostForm(forms.Form):
-    title = forms.CharField(
-        max_length=255,
-        min_length=5,
-        required=True,
-        label='Заголовок',
-        widget=forms.TextInput(attrs={'class': 'form-input'}),
-        error_messages={
-            'min_length': 'Слишком короткий заголовок',
-            'required': 'Без заголовка никак'
-        },
-        # validators=[RussianValidator()]
-    )
-    slug = forms.SlugField(
-        max_length=255,
-        label='URL',
-        validators=[MinLengthValidator(5), MaxLengthValidator(100)]
-    )
-    content = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 5}), required=False, label='Контент')
-    is_published = forms.BooleanField(required=False, label='Статус', initial=True)
+class AddPostForm(forms.ModelForm):
+    # title = forms.CharField(
+    #     max_length=255,
+    #     min_length=5,
+    #     required=True,
+    #     label='Заголовок',
+    #     widget=forms.TextInput(attrs={'class': 'form-input'}),
+    #     error_messages={
+    #         'min_length': 'Слишком короткий заголовок',
+    #         'required': 'Без заголовка никак'
+    #     },
+    #     # validators=[RussianValidator()]
+    # )
+    # slug = forms.SlugField(
+    #     max_length=255,
+    #     label='URL',
+    #     validators=[MinLengthValidator(5), MaxLengthValidator(100)]
+    # )
+    # content = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 5}), required=False, label='Контент')
+    # is_published = forms.BooleanField(required=False, label='Статус', initial=True)
     cat = forms.ModelChoiceField(
         queryset=Category.objects.all(), label='Категория', empty_label='Категория не выбрана'
     )
@@ -48,11 +48,19 @@ class AddPostForm(forms.Form):
         queryset=Husband.objects.all(), required=False, label='Муж', empty_label='Не замужем'
     )
 
+    class Meta:
+        model = Women
+        fields = ['title', 'slug', 'content', 'is_published', 'tags']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-input'}),
+            'content': forms.Textarea(attrs={'cols': 50, 'rows': 5})
+        }
+
     def clean_title(self):
         title = self.cleaned_data['title']
-        ALLOWED_CHARS = """
-            АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзийклмнопрстуфхцчшщбыъэюя0123456789- 
+        allowed_chars = """
+            АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзийклмнопрстуфхцчшщбыъэюя0123456789-
             """
-        if not (set(title) <= set(ALLOWED_CHARS)):
+        if set(title) <= set(allowed_chars):
             raise ValidationError("Должны присутствовать только русские символы, дефис и пробел.")
         return title
