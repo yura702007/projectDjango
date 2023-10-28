@@ -41,16 +41,14 @@ class AddPostForm(forms.ModelForm):
     # )
     # content = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 5}), required=False, label='Контент')
     # is_published = forms.BooleanField(required=False, label='Статус', initial=True)
-    cat = forms.ModelChoiceField(
-        queryset=Category.objects.all(), label='Категория', empty_label='Категория не выбрана'
-    )
+    cat = forms.ModelChoiceField(queryset=Category.objects.all(), empty_label="Категория не выбрана", label="Категории")
     husband = forms.ModelChoiceField(
-        queryset=Husband.objects.all(), required=False, label='Муж', empty_label='Не замужем'
+        queryset=Husband.objects.all(), empty_label="Не замужем", required=False, label="Муж"
     )
 
     class Meta:
         model = Women
-        fields = ['title', 'slug', 'content', 'is_published', 'tags']
+        fields = ['title', 'slug', 'content', 'cat', 'husband', 'is_published', 'tags']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-input'}),
             'content': forms.Textarea(attrs={'cols': 50, 'rows': 5})
@@ -60,8 +58,13 @@ class AddPostForm(forms.ModelForm):
     def clean_title(self):
         title = self.cleaned_data['title']
         allowed_chars = """
-            АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзийклмнопрстуфхцчшщбыъэюя0123456789-
+            АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯабвгдеёжзийклмнопрстуфхцчшщбыъэюя0123456789- 
             """
-        if set(title) <= set(allowed_chars):
+        if not set(title) <= set(allowed_chars):
             raise ValidationError("Должны присутствовать только русские символы, дефис и пробел.")
         return title
+
+    # def clean_cat(self):
+    #     cat = self.cleaned_data['cat']
+    #     print(cat)
+    #     return cat
