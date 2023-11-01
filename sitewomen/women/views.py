@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.defaultfilters import join
 
-from .forms import AddPostForm
+from .forms import AddPostForm, UploadFileForm
 from .models import Women, Category, TagPost
 
 menu = [
@@ -34,8 +34,12 @@ def handle_uploaded_file(f):
 
 def about(request: HttpRequest) -> HttpResponse:
     if request.method == 'post':
-        handle_uploaded_file(request.FILES['file_upload'])
-    return render(request, 'women/about.html', {'title': 'О сайте', 'menu': menu})
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(form.cleaned_data['file'])
+    else:
+        form = UploadFileForm()
+    return render(request, 'women/about.html', {'title': 'О сайте', 'menu': menu, 'form': form})
 
 
 def show_post(request: HttpRequest, post_slug: str) -> HttpResponse:
