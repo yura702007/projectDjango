@@ -26,7 +26,15 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'women/index.html', context=data)
 
 
+def handle_uploaded_file(f):
+    with open(f"uploads/{f.name}", "wb+") as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+
 def about(request: HttpRequest) -> HttpResponse:
+    if request.method == 'post':
+        handle_uploaded_file(request.FILES['file_upload'])
     return render(request, 'women/about.html', {'title': 'О сайте', 'menu': menu})
 
 
