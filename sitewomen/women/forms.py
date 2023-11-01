@@ -68,3 +68,7 @@ class AddPostForm(forms.ModelForm):
     #     cat = self.cleaned_data['cat']
     #     print(cat)
     #     return cat
+
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField(label='Файл')
