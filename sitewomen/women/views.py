@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.template.defaultfilters import join
 
 from .forms import AddPostForm, UploadFileForm
-from .models import Women, Category, TagPost
+from .models import Women, Category, TagPost, UploadFiles
 
 menu = [
     {'title': 'Главная страница', 'url_name': 'home'},
@@ -36,7 +36,9 @@ def about(request: HttpRequest) -> HttpResponse:
     if request.method == 'post':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            handle_uploaded_file(form.cleaned_data['file'])
+            fp = UploadFiles(file=form.cleaned_data['file'])
+            fp.save()
+            # handle_uploaded_file(form.cleaned_data['file'])
     else:
         form = UploadFileForm()
     return render(request, 'women/about.html', {'title': 'О сайте', 'menu': menu, 'form': form})
