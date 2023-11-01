@@ -81,7 +81,7 @@ def show_tag_posts_list(request: HttpRequest, tag_slug: str) -> HttpResponse:
 
 def add_page(request: HttpRequest) -> HttpResponse:
     if request.method == 'POST':
-        form = AddPostForm(request.POST)
+        form = AddPostForm(request.POST, request.FILES)
         if form.is_valid():
             # try:
             # Women.objects.create(**form.cleaned_data)
