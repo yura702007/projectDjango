@@ -2,6 +2,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.defaultfilters import join
+from django.views import View
 
 from .forms import AddPostForm, UploadFileForm
 from .models import Women, Category, TagPost, UploadFiles
@@ -97,6 +98,20 @@ def add_page(request: HttpRequest) -> HttpResponse:
         'form': form
     }
     return render(request, 'women/add_page.html', context=data)
+
+
+class AddPage(View):
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        form = AddPostForm()
+        return render(request, 'women/add_page.html', {'menu': menu, 'title': 'Добавление статьи', 'form': form})
+
+    def post(self, request: HttpRequest) -> HttpResponse:
+        form = AddPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        return render(request, 'women/add_page.html', {'menu': menu, 'title': 'Добавление статьи', 'form': form})
 
 
 def contacts(request: HttpRequest) -> HttpResponse:
