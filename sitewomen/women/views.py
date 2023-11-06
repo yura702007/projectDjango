@@ -30,6 +30,12 @@ menu = [
 
 class Index(TemplateView):
     template_name = 'women/index.html'
+    extra_context = {
+        'title': 'Главная страница',
+        'menu': menu,
+        'posts': Women.published.all().select_related('cat'),
+        'cat_selected': 0,
+    }
 
 
 def handle_uploaded_file(f):
