@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.defaultfilters import join
 from django.views import View
+from django.views.generic import TemplateView
 
 from .forms import AddPostForm, UploadFileForm
 from .models import Women, Category, TagPost, UploadFiles
@@ -16,15 +17,19 @@ menu = [
 ]
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    posts = Women.published.all().select_related('cat')
-    data = {
-        'title': 'Главная страница',
-        'menu': menu,
-        'posts': posts,
-        'cat_selected': 0,
-    }
-    return render(request, 'women/index.html', context=data)
+# def index(request: HttpRequest) -> HttpResponse:
+#     posts = Women.published.all().select_related('cat')
+#     data = {
+#         'title': 'Главная страница',
+#         'menu': menu,
+#         'posts': posts,
+#         'cat_selected': 0,
+#     }
+#     return render(request, 'women/index.html', context=data)
+
+
+class Index(TemplateView):
+    template_name = 'women/index.html'
 
 
 def handle_uploaded_file(f):
@@ -80,24 +85,24 @@ def show_tag_posts_list(request: HttpRequest, tag_slug: str) -> HttpResponse:
     return render(request, 'women/index.html', context=data)
 
 
-def add_page(request: HttpRequest) -> HttpResponse:
-    if request.method == 'POST':
-        form = AddPostForm(request.POST, request.FILES)
-        if form.is_valid():
-            # try:
-            # Women.objects.create(**form.cleaned_data)
-            form.save()
-            return redirect('home')
-            # except:
-            #     form.add_error(None, 'Ошибка добавления поста')
-    else:
-        form = AddPostForm()
-    data = {
-        'menu': menu,
-        'title': 'Добавление статьи',
-        'form': form
-    }
-    return render(request, 'women/add_page.html', context=data)
+# def add_page(request: HttpRequest) -> HttpResponse:
+#     if request.method == 'POST':
+#         form = AddPostForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             # try:
+#             # Women.objects.create(**form.cleaned_data)
+#             form.save()
+#             return redirect('home')
+#             # except:
+#             #     form.add_error(None, 'Ошибка добавления поста')
+#     else:
+#         form = AddPostForm()
+#     data = {
+#         'menu': menu,
+#         'title': 'Добавление статьи',
+#         'form': form
+#     }
+#     return render(request, 'women/add_page.html', context=data)
 
 
 class AddPage(View):

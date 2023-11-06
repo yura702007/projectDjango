@@ -5,7 +5,7 @@ from . import views, converters
 register_converter(converters.FourDigitYearConverter, 'yyyy')
 
 urlpatterns = [
-    path('', views.index, name='home'),
+    path('', views.Index.as_view(), name='home'),
     path('about/', views.about, name='about'),
     path('add_page/', views.AddPage.as_view(), name='add_page'),
     path('contacts/', views.contacts, name='contacts'),
