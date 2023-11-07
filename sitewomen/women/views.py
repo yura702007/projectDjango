@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.defaultfilters import join
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from .forms import AddPostForm, UploadFileForm
 from .models import Women, Category, TagPost, UploadFiles
@@ -28,12 +28,14 @@ menu = [
 #     return render(request, 'women/index.html', context=data)
 
 
-class Index(TemplateView):
+class Index(ListView):
+    model = Women
     template_name = 'women/index.html'
+    context_object_name = 'posts'
     extra_context = {
         'title': 'Главная страница',
         'menu': menu,
-        'posts': Women.published.all().select_related('cat'),
+        # 'posts': Women.published.all().select_related('cat'),
         'cat_selected': 0,
     }
 
