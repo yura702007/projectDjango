@@ -88,11 +88,12 @@ def show_post(request: HttpRequest, post_slug: str) -> HttpResponse:
 class ShowCategory(ListView):
     template_name = 'women/index.html'
     context_object_name = 'posts'
+    allow_empty = False
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         cat = context['posts'][0].cat
-        context['title'] = 'Главная страница'
+        context['title'] = f'Категория - {cat.name}'
         context['menu'] = menu
         context['cat_selected'] = cat.id
         return context
