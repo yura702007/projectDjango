@@ -32,12 +32,13 @@ class Index(ListView):
     model = Women
     template_name = 'women/index.html'
     context_object_name = 'posts'
-    extra_context = {
-        'title': 'Главная страница',
-        'menu': menu,
-        # 'posts': Women.published.all().select_related('cat'),
-        'cat_selected': 0,
-    }
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная страница'
+        context['menu'] = menu
+        context['cat_selected'] = 0
+        return context
 
 
 def handle_uploaded_file(f):
