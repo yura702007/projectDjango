@@ -29,7 +29,7 @@ menu = [
 
 
 class Index(ListView):
-    model = Women
+    # model = Women
     template_name = 'women/index.html'
     context_object_name = 'posts'
 
@@ -39,6 +39,9 @@ class Index(ListView):
         context['menu'] = menu
         context['cat_selected'] = 0
         return context
+
+    def get_queryset(self):
+        return Women.published.all().select_related('cat')
 
 
 def handle_uploaded_file(f):
